@@ -1,11 +1,20 @@
-function createGrid(container) {
-  let i, size=256;
-  askSize(container, size);
-  for (i = 0; i < size; i++) {
+const DEFAULT = 16;
+const LIMIT = 100;
+
+function createGrid(container, size) {
+  let i;
+  const total = size * size;
+
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+
+  for (i = 0; i < total; i++) {
     const cuadrado = document.createElement("div");
     cuadrado.classList.add("grid");
     cuadrado.classList.add("v" + i);
-    //hover to trail
+    cuadrado.style.flex = `0 0 calc(100% / ${size})`;
+
     cuadrado.addEventListener(
       "mouseover",
       () => (cuadrado.style.backgroundColor = "black")
@@ -14,22 +23,27 @@ function createGrid(container) {
   }
 }
 
-function askSize(container,size) {
-  const btn = document.createElement("button");
-  container.appendChild(btn);
-  btn.addEventListener("click", () => {
-    while (size > 100) size = prompt("Grid size?");
-  });
-  return size;
-}
-
 function main() {
   const container = document.querySelector("#container");
-  createGrid(container);
+  const btnContainer = document.querySelector("#btn");
+  const askButton = document.createElement("button");
 
-  //promtea unapregunta que cuantos grids quieres.
-  //luego se lo metes y con text input guarda el valor y lo pasa
-  // a la funcnion creargrid Multiplicar valor ^2.
+  askButton.textContent = "click for gridsize";
+  askButton.classList.add("ask-button");
+
+  btnContainer.appendChild(askButton);
+  createGrid(container, DEFAULT);
+
+  askButton.addEventListener("click", promptMe);
+
+  function promptMe() {
+    let userSize = 0;
+    do {
+      userSize = prompt("Please provide an grid Size");
+      alert(userSize);
+    } while (userSize > LIMIT);
+    createGrid(container, +userSize);
+  }
 }
 
 main();
