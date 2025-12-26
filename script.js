@@ -5,16 +5,12 @@ function createGrid(container) {
     const cuadrado = document.createElement("div");
     cuadrado.classList.add("grid");
     cuadrado.classList.add("v" + i);
-
+    //hover to trail
+    cuadrado.addEventListener("mouseover", ()=> cuadrado.style.backgroundColor = "black");
     container.appendChild(cuadrado);
   }
 }
 
-function hoverGrid(container) {
-  //hover a grid and changes the background color
-  //use javascript
-  const trail = document.q
-}
 
 function main() {
   const container = document.querySelector("#container");
